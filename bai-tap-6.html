@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 6: AI Có Trách Nhiệm - Portfolio</title>
+    <!-- Phông chữ đồng bộ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F4F2EC; 
+            --red: #D54040;      
+            --dark: #111820;     
+            --white: #FFFFFF;
+            --light-tan: #EAE3D3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark);
+            font-family: 'Be Vietnam Pro', sans-serif;
+            padding: 40px 20px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3, h4, .heading-font {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Nút quay lại */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border: 2px solid var(--dark);
+            border-radius: 30px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--red);
+            color: var(--white);
+            transform: translateX(-5px);
+            box-shadow: 4px 4px 0px var(--dark);
+        }
+
+        /* Thẻ nội dung chính */
+        .card {
+            background-color: var(--bg-color);
+            border: 2px solid var(--dark);
+            border-radius: 24px;
+            box-shadow: 10px 10px 0px var(--dark);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 25px 40px;
+            border-bottom: 2px solid var(--red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .card-header h1 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .card-header .badge {
+            background: var(--dark);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .card-content {
+            padding: 40px;
+            background: var(--white);
+        }
+
+        .section-block {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: var(--red);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .body-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--dark);
+            text-align: justify;
+        }
+
+        /* Danh sách nguyên tắc */
+        .principles-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .principle-item {
+            background: var(--white);
+            border: 2px solid var(--dark);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 4px 4px 0px var(--red);
+            transition: transform 0.2s;
+        }
+
+        .principle-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .principle-item h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--light-tan);
+            padding-bottom: 5px;
+        }
+
+        .principle-item p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Khu vực đính kèm sản phẩm */
+        .attachment-box {
+            border: 2px solid var(--dark);
+            border-radius: 12px;
+            padding: 25px;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .attachment-info h4 { margin-bottom: 5px; }
+        .attachment-info p { font-size: 0.9rem; margin: 0; opacity: 0.8; }
+
+        .download-btn {
+            background: var(--red);
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 2px solid var(--dark);
+            box-shadow: 3px 3px 0px var(--dark);
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--dark);
+        }
+
+        @media (max-width: 768px) {
+            .principles-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Nút điều hướng -->
+        <a href="index.html" class="back-btn heading-font">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            QUAY LẠI TRANG CHỦ
+        </a>
+
+        <div class="card">
+            <!-- Header -->
+            <div class="card-header">
+                <div>
+                    <h1 class="heading-font">BÀI TẬP 6</h1>
+                    <span style="font-family: 'Be Vietnam Pro'; font-weight: 600; color: var(--red); font-size: 0.9rem;">Trí tuệ Nhân tạo Có Trách nhiệm & Đạo đức</span>
+                </div>
+                <div class="badge">ETHICS</div>
+            </div>
+
+            <!-- Nội dung chính -->
+            <div class="card-content">
+                
+                <!-- 1. MỤC TIÊU -->
+                <div class="section-block">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Mục tiêu & Chính sách
+                    </h2>
+                    <div class="body-text">
+                        <p>Nghiên cứu về việc sử dụng Trí tuệ nhân tạo (AI) một cách có trách nhiệm và đạo đức trong môi trường học tập và nghiên cứu. Dựa trên việc phân tích chính sách của các trường đại học (như Đại học Công nghệ - ĐHQG HN, Bách khoa Hà Nội, RMIT), bài tập nhằm xác định ranh giới giữa việc hỗ trợ hợp lý và gian lận học thuật.</p>
+                        <p>Hiện nay, chính sách đã chuyển từ "cấm đoán tuyệt đối" sang "cho phép có điều kiện". AI được chấp nhận như một công cụ hỗ trợ (như tìm kiếm ý tưởng, lập dàn ý, chỉnh sửa ngữ pháp), nhưng yêu cầu minh bạch, trích dẫn rõ ràng, và bảo vệ tính nguyên bản của bài làm (tuyệt đối không sao chép nguyên văn). AI không được công nhận là đồng tác giả vì không có tư cách pháp nhân.</p>
+                    </div>
+                </div>
+
+                <!-- 2. THỰC HÀNH SỬ DỤNG AI -->
+                <div class="section-block">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Thực hành sử dụng AI minh bạch
+                    </h2>
+                    <div class="body-text">
+                        <p>Tôi đã áp dụng AI vào nhiệm vụ viết bài luận: <em>"Tác động của AI đến thị trường lao động Việt Nam"</em>. Quá trình này thể hiện tư duy phản biện khi tôi tự điều chỉnh dàn ý do AI gợi ý (thêm mục giải pháp) và quan trọng nhất là kiểm chứng (Fact-check) số liệu. Khi AI cung cấp số liệu cũ từ WEF 2020, tôi đã chủ động tìm kiếm báo cáo mới nhất (2023). Điều này chứng minh AI thường mắc lỗi "ảo giác" (hallucination) và con người phải là bộ lọc cuối cùng. Toàn bộ đoạn văn được tôi tự viết và chỉ dùng AI để kiểm tra lỗi chính tả.</p>
+                        <p><strong>Tuyên bố minh bạch:</strong> Trong bài luận, tôi đã khai báo rõ ràng việc sử dụng ChatGPT (phiên bản GPT-4o) vào ngày 24/12/2025 để gợi ý cấu trúc và hiệu đính lỗi, khẳng định lập luận và số liệu là do tác giả tự tổng hợp.</p>
+                    </div>
+                </div>
+
+                <!-- 3. PHÂN TÍCH ĐẠO ĐỨC & NGUYÊN TẮC CÁ NHÂN -->
+                <div class="section-block">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Bộ 6 nguyên tắc (6T) cá nhân
+                    </h2>
+                    <div class="body-text" style="margin-bottom: 20px;">
+                        <p>Việc gian lận học thuật (như "khoán trắng" bài luận cho AI) không chỉ lừa dối nhà trường mà còn có thể gián tiếp xâm phạm bản quyền tác giả thực sự. Hơn nữa, sự phụ thuộc vào AI gây ra "sự xói mòn nhận thức" và làm mất khả năng tư duy logic. Do đó, tôi đã thiết lập bộ quy tắc cá nhân để đảm bảo quá trình học tập thực chất:</p>
+                    </div>
+                    <ul class="principles-list">
+                        <li class="principle-item">
+                            <h4 class="heading-font">1. Tư duy trước, Công nghệ sau</h4>
+                            <p>Luôn tự phác thảo ý tưởng và giải quyết bài toán trước khi mở AI. AI chỉ để mài giũa, không định hình tư duy.</p>
+                        </li>
+                        <li class="principle-item">
+                            <h4 class="heading-font">2. Tuyệt đối không Copy-Paste</h4>
+                            <p>Sản phẩm nộp cho giảng viên phải mang dấu ấn cá nhân. Tỷ lệ chất xám cá nhân phải chiếm ưu thế tuyệt đối (trên 80%).</p>
+                        </li>
+                        <li class="principle-item">
+                            <h4 class="heading-font">3. Tường minh và Khai báo</h4>
+                            <p>Luôn khai báo công cụ AI đã dùng và dùng ở khâu nào (VD: check ngữ pháp) ở cuối mỗi bài tập.</p>
+                        </li>
+                        <li class="principle-item">
+                            <h4 class="heading-font">4. Thẩm định mọi thông tin</h4>
+                            <p>Coi AI là nguồn tham khảo "có nguy cơ sai lệch cao". Tự xác thực trích dẫn, số liệu trước khi sử dụng.</p>
+                        </li>
+                        <li class="principle-item">
+                            <h4 class="heading-font">5. Tôn trọng bảo mật dữ liệu</h4>
+                            <p>Không đưa dữ liệu nhạy cảm, thông tin cá nhân hay bài làm lên các nền tảng AI công cộng để tránh rò rỉ.</p>
+                        </li>
+                        <li class="principle-item">
+                            <h4 class="heading-font">6. Trách nhiệm cuối cùng</h4>
+                            <p>Chịu trách nhiệm 100% về tính chính xác, bản quyền và đạo đức của sản phẩm, không đổ lỗi cho AI.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 4. SẢN PHẨM ĐÍNH KÈM -->
+                <div class="section-block" style="margin-bottom: 0;">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Sản phẩm đính kèm
+                    </h2>
+                    <div class="attachment-box">
+                        <div class="attachment-info">
+                            <h4 class="heading-font">Báo cáo Bài tập cá nhân - Bài 6.docx</h4>
+                            <p>Định dạng: Microsoft Word Document • Chứa báo cáo phân tích, ghi chép quá trình sử dụng và hình ảnh Infographic.</p>
+                        </div>
+                        <a href="C:/Users/Admin/Documents/CNS & AI/Bài tập 6 - CNS&AI.docx" class="download-btn heading-font" download>TẢI XUỐNG BÁO CÁO</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

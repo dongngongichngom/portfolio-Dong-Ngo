@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 3: Kỹ năng Prompt - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F4F2EC; 
+            --red: #D54040;      
+            --dark: #111820;     
+            --white: #FFFFFF;
+            --light-tan: #EAE3D3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--dark);
+            font-family: 'Be Vietnam Pro', sans-serif;
+            padding: 40px 20px;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+
+        h1, h2, h3, h4, .heading-font {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Nút quay lại */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border: 2px solid var(--dark);
+            border-radius: 30px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--red);
+            color: var(--white);
+            transform: translateX(-5px);
+            box-shadow: 4px 4px 0px var(--dark);
+        }
+
+        /* Thẻ nội dung chính */
+        .card {
+            background-color: var(--bg-color);
+            border: 2px solid var(--dark);
+            border-radius: 24px;
+            box-shadow: 10px 10px 0px var(--dark);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 25px 40px;
+            border-bottom: 2px solid var(--red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-color);
+            position: relative;
+        }
+
+        .card-header h1 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin: 0;
+        }
+
+        .card-header .badge {
+            background: var(--dark);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .card-content {
+            padding: 40px;
+            background: var(--white);
+        }
+
+        .section-block {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: var(--red);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .body-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--dark);
+            text-align: justify;
+        }
+
+        /* Trình bày Timeline */
+        .timeline {
+            border-left: 2px dashed var(--red);
+            padding-left: 25px;
+            margin-left: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '✦';
+            position: absolute;
+            left: -37.5px;
+            top: 0;
+            color: var(--bg-color);
+            background: var(--red);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            border: 2px solid var(--dark);
+        }
+
+        .timeline-item h4 {
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Formula Box (Đặc biệt cho bài Prompt) */
+        .formula-box {
+            background: var(--light-tan);
+            border: 2px solid var(--dark);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 15px;
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--red);
+        }
+        
+        .formula-box span {
+            color: var(--dark);
+            margin: 0 5px;
+        }
+
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .highlight-list li {
+            padding: 10px 15px;
+            border-bottom: 1px dashed var(--dark);
+            font-size: 0.95rem;
+        }
+        .highlight-list li:last-child { border-bottom: none; }
+        .highlight-list li strong { color: var(--red); }
+
+        /* Khu vực đính kèm sản phẩm */
+        .attachment-box {
+            border: 2px solid var(--dark);
+            border-radius: 12px;
+            padding: 25px;
+            background: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .attachment-info h4 { margin-bottom: 5px; }
+        .attachment-info p { font-size: 0.9rem; margin: 0; opacity: 0.8; }
+
+        .download-btn {
+            background: var(--red);
+            color: var(--white);
+            text-decoration: none;
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: 2px solid var(--dark);
+            box-shadow: 3px 3px 0px var(--dark);
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px var(--dark);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-btn heading-font">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            QUAY LẠI TRANG CHỦ
+        </a>
+
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h1 class="heading-font">BÀI TẬP 3</h1>
+                    <span style="font-family: 'Be Vietnam Pro'; font-weight: 600; color: var(--red); font-size: 0.9rem;">Kỹ năng Viết Prompt hiệu quả</span>
+                </div>
+                <div class="badge">PROMPT ENG</div>
+            </div>
+
+            <div class="card-content">
+                
+                <div class="section-block">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Mục tiêu bài tập
+                    </h2>
+                    <div class="body-text">
+                        <p>Phát triển và làm chủ kỹ năng <strong>"Prompt Engineering"</strong> (Kỹ thuật thiết kế câu lệnh) để tận dụng tối đa sức mạnh của các Mô hình ngôn ngữ lớn (LLMs) như ChatGPT, Gemini. Qua đó, áp dụng AI như một trợ lý học tập đắc lực trong việc tra cứu, tổng hợp kiến thức và ôn thi các môn chuyên ngành thuộc khối Công nghệ thông tin.</p>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Thử nghiệm 3 tác vụ học tập
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4 class="heading-font">Tác vụ 1: Tóm tắt tài liệu học thuật</h4>
+                            <p><strong>Nội dung:</strong> Phân biệt Machine Learning và Deep Learning.<br>
+                            <strong>Kết quả:</strong> Prompt nâng cao (sử dụng Role-playing) giúp AI không chỉ rút gọn chữ mà còn thiết lập bảng so sánh trực quan và cung cấp ví dụ thực tế (nhận diện khuôn mặt) cực kỳ dễ hiểu.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="heading-font">Tác vụ 2: Giải thích khái niệm phức tạp</h4>
+                            <p><strong>Nội dung:</strong> Giải thích Lập trình Hướng đối tượng (OOP) cho sinh viên năm nhất.<br>
+                            <strong>Kết quả:</strong> Việc áp dụng "Chain-of-thought" (tư duy từng bước) ép AI dùng hình ảnh ẩn dụ (bản thiết kế & ngôi nhà) trước khi đi vào code Python, tạo ra một bài giảng xuất sắc.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="heading-font">Tác vụ 3: Tạo bộ câu hỏi ôn tập</h4>
+                            <p><strong>Nội dung:</strong> Ôn thi Python (Cấu trúc điều kiện và Vòng lặp).<br>
+                            <strong>Kết quả:</strong> Việc "Định hình cấu trúc đầu ra" và "Cung cấp bối cảnh" giúp AI tự động phân chia độ khó: Trắc nghiệm (Dễ) -> Sửa lỗi Code (Trung bình) -> Bài toán thực tế (Khó).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-block">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Công thức & Mẹo viết Prompt
+                    </h2>
+                    <div class="body-text">
+                        <p>Từ những thử nghiệm trên, một prompt dài và chi tiết luôn mang lại kết quả vượt trội hơn một câu lệnh cộc lốc. Dưới đây là bộ khung chuẩn để giao tiếp hiệu quả với AI:</p>
+                        
+                        <div class="formula-box">
+                            VAI TRÒ <span>+</span> BỐI CẢNH <span>+</span> NHIỆM VỤ <span>+</span> ĐỊNH DẠNG
+                        </div>
+
+                        <ul class="highlight-list">
+                            <li><strong>Chỉ định vai trò (Persona):</strong> Yêu cầu AI đóng vai "Chuyên gia" hay "Giảng viên tâm lý" để thay đổi văn phong bớt khô khan.</li>
+                            <li><strong>Hướng dẫn tư duy (Chain-of-thought):</strong> Đừng bắt AI đưa kết quả ngay. Hãy chia nhỏ bước tư duy: Ví dụ thực tế → Khái niệm → Code minh họa.</li>
+                            <li><strong>Sử dụng dấu phân cách:</strong> Dùng ngoặc kép "" hoặc ngoặc vuông [] để tách biệt lệnh của người dùng và dữ liệu nguồn đưa vào.</li>
+                            <li><strong>Tinh chỉnh liên tục (Iterative):</strong> Phản hồi lại với AI nếu kết quả chưa ưng ý (VD: "Hãy làm cho nó ngắn hơn nữa").</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-block" style="margin-bottom: 0;">
+                    <h2 class="section-title heading-font">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--red)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                        Sản phẩm đính kèm
+                    </h2>
+                    <div class="attachment-box">
+                        <div class="attachment-info">
+                            <h4 class="heading-font">Bài_tập_3_CNS_AI.docx</h4>
+                            <p>Định dạng: Microsoft Word Document • Chứa toàn bộ lịch sử trò chuyện với AI và mã code minh họa.</p>
+                        </div>
+                        <a href="C:/Users/Admin/Documents/CNS & AI/Bài tập 3 - CNS&AI.docx" class="download-btn heading-font" download>TẢI XUỐNG NHẬT KÝ</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
